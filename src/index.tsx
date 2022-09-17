@@ -3,7 +3,7 @@ import { render } from 'solid-js/web';
 import '@fontsource/inter';
 import 'normalize.css';
 import './shared/css/global.css';
-import App from './App/';
+import App from './App';
 import { Router } from '@solidjs/router';
 
 render(
