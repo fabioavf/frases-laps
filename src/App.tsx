@@ -3,7 +3,7 @@ import { Routes, Route } from '@solidjs/router';
 
 const Phrases = lazy(() => import('./Phrases'));
 const Login = lazy(() => import('./Login'));
-import Auditoria from './Auditoria';
+const Auditoria = lazy(() => import('./Auditoria'));
 import { Toaster } from 'solid-toast';
 
 const App: Component = () => {
