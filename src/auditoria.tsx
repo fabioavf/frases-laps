@@ -25,7 +25,7 @@ const Auditoria = () => {
 
           let { data, error, status } = await supabase
             .from<Phrase>('phrases')
-            .select('id, content, checked')
+            .select('*')
             .eq('checked', false);
 
           if (error && status !== 406) {
@@ -54,7 +54,10 @@ const Auditoria = () => {
 
   const handleRemove = async (id: number) => {
     try {
-      let { data, error, status } = await supabase.from<Phrase>('phrases').delete().eq('id', id);
+      let { data, error, status } = await supabase
+        .from<Phrase>('phrases')
+        .delete()
+        .eq('id', id);
       setPhrases(phrases().filter((phrase) => phrase.id != id));
     } catch (error) {
       throw error;
@@ -63,7 +66,10 @@ const Auditoria = () => {
 
   const handleApprove = async (id: number) => {
     try {
-      let { data, error, status } = await supabase.from<Phrase>('phrases').update({ checked: true }).eq('id', id);
+      let { data, error, status } = await supabase
+        .from<Phrase>('phrases')
+        .update({ checked: true })
+        .eq('id', id);
       setPhrases(phrases().filter((phrase) => phrase.id != id));
     } catch (error) {
       throw error;
@@ -83,8 +89,19 @@ const Auditoria = () => {
               {phrases().map((phrase) => {
                 return (
                   <li class='flex flex-col gap-4 bg-violet-200 p-4 rounded shadow'>
-                    <p class='text-lg'>{phrase.content}</p>
-                    <span class='w-full bg-slate-500 h-px' />
+                    <h2 class='font-bold text-lg text-violet-700`'>
+                      Conteúdo da frase
+                    </h2>
+                    <p class='text-base'>{phrase.content}</p>
+                    {phrase.author && (
+                      <>
+                        <h2 class='font-bold text-lg text-violet-700`'>
+                          Autor
+                        </h2>
+                        <p class='text-base'>{phrase.author}</p>
+                      </>
+                    )}
+                    <span class='w-full bg-gray-900 h-px' />
                     <div class='flex gap-2 self-end'>
                       <button
                         onClick={() => handleRemove(phrase.id)}

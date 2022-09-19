@@ -3,4 +3,5 @@ export interface Phrase {
   content: string;
   created_at: string;
   checked: boolean;
+  author?: string;
 }
