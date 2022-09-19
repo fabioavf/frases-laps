@@ -3,13 +3,15 @@ import { Routes, Route } from '@solidjs/router';
 
 const Phrases = lazy(() => import('./Phrases'));
 const Login = lazy(() => import('./Login'));
+import Auditoria from './Auditoria';
 
 const App: Component = () => {
   return (
-    <main class='flex flex-col h-screen w-screen bg-gradient-to-br from-violet-600 to-violet-300'>
+    <main class='flex flex-col min-h-screen w-screen bg-gradient-to-br from-violet-600 to-violet-300'>
       <Routes>
         <Route path='/' component={Phrases} />
         <Route path='/login' component={Login} />
+        <Route path='/auditoria' component={Auditoria} />
       </Routes>
 
       <footer class='flex flex-row items-center justify-end md:justify-center py-4 px-8 gap-1 bg-violet-50 shadow-md backdrop-blur-sm text-violet-900 opacity-70 text-xs sm:text-base transition-all'>
