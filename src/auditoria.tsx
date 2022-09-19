@@ -23,10 +23,7 @@ const Auditoria = () => {
         if (session) {
           const { user } = supabase.auth.setAuth(session.access_token);
 
-          let { data, error, status } = await supabase
-            .from<Phrase>('phrases')
-            .select('*')
-            .eq('checked', false);
+          let { data, error, status } = await supabase.from<Phrase>('phrases').select('*').eq('checked', false);
 
           if (error && status !== 406) {
             throw error;
@@ -54,10 +51,7 @@ const Auditoria = () => {
 
   const handleRemove = async (id: number) => {
     try {
-      let { data, error, status } = await supabase
-        .from<Phrase>('phrases')
-        .delete()
-        .eq('id', id);
+      let { data, error, status } = await supabase.from<Phrase>('phrases').delete().eq('id', id);
       setPhrases(phrases().filter((phrase) => phrase.id != id));
     } catch (error) {
       throw error;
@@ -66,10 +60,7 @@ const Auditoria = () => {
 
   const handleApprove = async (id: number) => {
     try {
-      let { data, error, status } = await supabase
-        .from<Phrase>('phrases')
-        .update({ checked: true })
-        .eq('id', id);
+      let { data, error, status } = await supabase.from<Phrase>('phrases').update({ checked: true }).eq('id', id);
       setPhrases(phrases().filter((phrase) => phrase.id != id));
     } catch (error) {
       throw error;
@@ -86,39 +77,39 @@ const Auditoria = () => {
             <Loading />
           ) : (
             <ul class='flex flex-col gap-4'>
-              {phrases().map((phrase) => {
-                return (
-                  <li class='flex flex-col gap-4 bg-violet-200 p-4 rounded shadow'>
-                    <h2 class='font-bold text-lg text-violet-700`'>
-                      Conteúdo da frase
-                    </h2>
-                    <p class='text-base'>{phrase.content}</p>
-                    {phrase.author && (
-                      <>
-                        <h2 class='font-bold text-lg text-violet-700`'>
-                          Autor
-                        </h2>
-                        <p class='text-base'>{phrase.author}</p>
-                      </>
-                    )}
-                    <span class='w-full bg-gray-900 h-px' />
-                    <div class='flex gap-2 self-end'>
-                      <button
-                        onClick={() => handleRemove(phrase.id)}
-                        class='px-4 py-2 bg-red-500 text-violet-100 rounded shadow font-bold hover:bg-red-600 active:bg-red-700 cursor-pointer transition-all'
-                      >
-                        Remover
-                      </button>
-                      <button
-                        onClick={() => handleApprove(phrase.id)}
-                        class='px-4 py-2 bg-green-500 text-violet-100 rounded shadow font-bold hover:bg-green-600 active:bg-green-700 cursor-pointer transition-all'
-                      >
-                        Aprovar
-                      </button>
-                    </div>
-                  </li>
-                );
-              })}
+              {phrases().length == 0 ? (
+                <span>Nenhuma frase com auditoria pendente!</span>
+              ) : (
+                phrases().map((phrase) => {
+                  return (
+                    <li class='flex flex-col gap-4 bg-violet-200 p-4 rounded shadow'>
+                      <h2 class='font-bold text-lg text-violet-700`'>Conteúdo da frase</h2>
+                      <p class='text-base'>{phrase.content}</p>
+                      {phrase.author && (
+                        <>
+                          <h2 class='font-bold text-lg text-violet-700`'>Autor</h2>
+                          <p class='text-base'>{phrase.author}</p>
+                        </>
+                      )}
+                      <span class='w-full bg-gray-900 h-px' />
+                      <div class='flex gap-2 self-end'>
+                        <button
+                          onClick={() => handleRemove(phrase.id)}
+                          class='px-4 py-2 bg-red-500 text-violet-100 rounded shadow font-bold hover:bg-red-600 active:bg-red-700 cursor-pointer transition-all'
+                        >
+                          Remover
+                        </button>
+                        <button
+                          onClick={() => handleApprove(phrase.id)}
+                          class='px-4 py-2 bg-green-500 text-violet-100 rounded shadow font-bold hover:bg-green-600 active:bg-green-700 cursor-pointer transition-all'
+                        >
+                          Aprovar
+                        </button>
+                      </div>
+                    </li>
+                  );
+                })
+              )}
             </ul>
           )}
         </div>

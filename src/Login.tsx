@@ -57,7 +57,7 @@ const Login = () => {
             </div>
             <div class='flex flex-col gap-2 w-full'>
               <label class='font-semibold' for='password'>
-                E-mail
+                Senha
               </label>
               <input
                 class='p-2 rounded bg-violet-50 shadow-sm'
